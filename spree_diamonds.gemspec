@@ -3,13 +3,13 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_diamonds'
   s.version     = '0.0.1'
-  s.summary     = 'TODO: Add gem summary here'
-  s.description = 'TODO: Add (optional) gem description here'
-  s.required_ruby_version = '>= 1.8.7'
+  s.summary     = 'diamonds-for-you spree extension'
+  s.description = 'Spreecommerce extension to get this working for diamonds-for-you'
+  s.required_ruby_version = '>= 1.9.2'
 
   s.author    = 'fattymiller'
   s.email     = 'github-diamonds@syn-ng.com'
-  s.homepage  = 'http://www.spreecommerce.com'
+  s.homepage  = 'http://www.diamonds-for-you.com.au'
 
   #s.files       = `git ls-files`.split("\n")
   #s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
