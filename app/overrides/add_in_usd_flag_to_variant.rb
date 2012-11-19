@@ -21,10 +21,15 @@ Deface::Override.new(:virtual_path => "spree/admin/products/_form",
      <script type='text/javascript'>
       update_checkbox_visibility = function(source) {
         if (source.is(':checked')) {
-          $(\"#aud_display\").show()
+          $(\"#aud_display\").show();
         } else {
-          $(\"#aud_display\").hide()
-        }        
+          $(\"#aud_display\").hide();
+        }
+        
+        var unconverted = $(\"#product_unconverted_price\").val();
+        var rate = $(\"#product_is_in_usd\").attr(\"data-rate\");
+        
+        $(\"#aud_display span\").html((unconverted * rate).toFixed(2));
       };
       
       $(\"#product_is_in_usd\").change(function() {
