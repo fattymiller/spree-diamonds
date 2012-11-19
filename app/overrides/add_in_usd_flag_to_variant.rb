@@ -17,4 +17,22 @@ Deface::Override.new(:virtual_path => "spree/admin/products/_form",
         <strong>AUD </strong> <span><%= number_to_currency @product.master.price %></span> (1 <strong>US dollar</strong> = <%= Spree::Config.conversion_rate %> <strong><%= Spree::Config.conversion_rate == 1 ? \"Australian dollar\" : \"Australian dollars\" %></strong>)
        </p>
      <% end %>
+     
+     <script type='text/javascript'>
+      update_checkbox_visibility = function(source) {
+        if (source.is(':checked')) {
+          $(\"#aud_display\").show()
+        } else {
+          $(\"#aud_display\").hide()
+        }        
+      };
+      
+      $(\"#product_is_in_usd\").change(function() {
+        update_checkbox_visibility($(this));
+      });
+      
+      $(document).ready(function() {
+        update_checkbox_visibility($(\"#product_is_in_usd\").first());
+      })
+     </script>
 ")
