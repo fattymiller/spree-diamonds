@@ -1,6 +1,6 @@
 Deface::Override.new(:virtual_path => "spree/admin/products/_form",
                      :name => "add_in_usd_to_variant",
-                     :insert_after => "#product_price_field",
+                     :insert_top => "[data-hook=admin_product_form_right]",
                      :disabled => false,
                      :text => "
        <%= f.field_container :is_in_usd do %>
