@@ -1,7 +1,7 @@
 module SpreeDiamonds
   class Engine < Rails::Engine
     engine_name 'spree_diamonds'
-    isolate_namespace Spree
+    #isolate_namespace Spree
 
     config.autoload_paths += %W(#{config.root}/lib)
 
