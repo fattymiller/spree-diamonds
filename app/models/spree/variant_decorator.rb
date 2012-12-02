@@ -1,5 +1,5 @@
 Spree::Variant.class_eval do
-  attr_accessible :is_in_usd, :unconverted_price
+  attr_accessible :is_in_usd, :unconverted_price, :certificate_number
   
   has_one :diamond_certification
   
