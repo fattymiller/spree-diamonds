@@ -30,6 +30,18 @@ Spree::Variant.class_eval do
     end
   end
   
+  def product_description
+    nil if !product.is_diamond?
+
+    format = [  "#{I18n.t("diamond.cut.meta.#{option_value("stone-cut").downcase.gsub(" ", "_").gsub("/", "").gsub("\\", "")}").humanize}, this",
+                "#{I18n.t("diamond.clarity.meta.#{option_value("stone-clarity").upcase}")}",
+                "#{option_value("stone-carat").downcase} carat",
+                "#{option_value("stone-shape").downcase} cut diamond",
+                "#{I18n.t("diamond.colour.meta.#{option_value("stone-colour").upcase}")}." ]
+              
+    format.join(" ")
+  end
+  
   private
   
   def convert_price(price)
