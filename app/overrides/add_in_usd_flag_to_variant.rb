@@ -20,8 +20,8 @@ Deface::Override.new(:virtual_path => "spree/admin/products/_form",
      
      <script type='text/javascript'>
        update_conversion_information = function() {
-         var unconverted = $(\"#product_unconverted_price\").val();
-         var rate = $(\"#product_is_in_usd\").attr(\"data-rate\");
+         var unconverted = parseFloat($(\"#product_unconverted_price\").val().replace(/,/, ''), 10);
+         var rate = parseFloat($(\"#product_is_in_usd\").attr(\"data-rate\"), 10);
          
          $(\"#aud_display span\").html((unconverted * rate).toFixed(2));
        };
@@ -72,9 +72,9 @@ Deface::Override.new(:virtual_path => "spree/admin/variants/_form",
      
      <script type='text/javascript'>
        update_conversion_information = function() {
-         var unconverted = $(\"#variant_unconverted_price\").val();
-         var rate = $(\"#variant_is_in_usd\").attr(\"data-rate\");
-       
+         var unconverted = parseFloat($(\"#variant_unconverted_price\").val().replace(/,/, ''), 10);
+         var rate = parseFloat($(\"#variant_is_in_usd\").attr(\"data-rate\"), 10);
+         
          $(\"#aud_display span\").html((unconverted * rate).toFixed(2));
        };
      
