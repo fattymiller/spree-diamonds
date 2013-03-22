@@ -9,6 +9,9 @@ Spree::Variant.class_eval do
   def price
     !!self[:is_in_usd] ? convert_price(self[:price]) : self[:price]
   end  
+  def sale_price
+    !!self[:is_in_usd] ? convert_price(self[:sale_price]) : self[:sale_price]
+  end  
   
   def unconverted_price=(unconverted)
     self.price = unconverted
