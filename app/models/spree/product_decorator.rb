@@ -5,4 +5,8 @@ Spree::Product.class_eval do
   def is_diamond?
     taxons.any? { |taxon| taxon.ancestors.collect(&:name).include?("Diamonds") }
   end
+  
+  def stock_count
+    has_variants? ? variants.collect(&:on_hand).inject(&:+) : master.on_hand
+  end
 end
