@@ -6,12 +6,23 @@ Spree::Variant.class_eval do
   has_many :variant_properties, :dependent => :destroy
   has_many :properties, :through => :variant_properties
   
-  def price
-    !!self[:is_in_usd] ? convert_price(self[:price]) : self[:price]
+  def normal_price
+    convert_price self[:price]
   end  
   def sale_price
-    !!self[:is_in_usd] ? convert_price(self[:sale_price]) : self[:sale_price]
-  end  
+    convert_price product.sale_price
+  end
+  
+  def currently_on_sale?
+    product.currently_on_sale?
+  end
+  def price
+    currently_on_sale? ? sale_price : normal_price
+  end
+  
+  def in_usd?
+    !!self[:is_in_usd]
+  end
   
   def unconverted_price=(unconverted)
     self.price = unconverted
@@ -48,7 +59,7 @@ Spree::Variant.class_eval do
   private
   
   def convert_price(price)
-    return price * Spree::Config.conversion_rate
+    in_usd? ? (price * Spree::Config.conversion_rate) : price
   end
   
 end
