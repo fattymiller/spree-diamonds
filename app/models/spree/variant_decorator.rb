@@ -14,7 +14,7 @@ Spree::Variant.class_eval do
   end
   
   def currently_on_sale?
-    product.currently_on_sale?
+    product ? product.currently_on_sale? : false
   end
   def price
     currently_on_sale? ? sale_price : normal_price
