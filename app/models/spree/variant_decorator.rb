@@ -7,7 +7,7 @@ Spree::Variant.class_eval do
   has_many :properties, :through => :variant_properties
   
   def normal_price
-    convert_price self[:price]
+    convert_price unconverted_price
   end  
   def sale_price
     convert_price product.sale_price
