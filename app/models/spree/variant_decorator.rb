@@ -1,25 +1,29 @@
 Spree::Variant.class_eval do
-  attr_accessible :is_in_usd, :unconverted_price, :certificate_number
+  attr_accessible :is_in_usd, :unconverted_price, :certificate_number, :sale_price, :sale_starts, :sale_ends
   
   has_one :diamond_certification
 
   has_many :variant_properties, :dependent => :destroy
   has_many :properties, :through => :variant_properties
   
+  def price
+    currently_on_sale? ? sale_price : normal_price
+  end
   def normal_price
     convert_price unconverted_price
   end  
   def sale_price
-    convert_price product.sale_price
+    convert_price(self[:sale_price] || product.sale_price)
+  end
+  
+  def inside_sale_bounds?
+    (!sale_starts || Time.now > sale_starts) && (!sale_ends || Time.now < sale_ends)
   end
   
   def currently_on_sale?
-    product ? product.currently_on_sale? : false
+    (product && product.currently_on_sale?) || (self[:sale_price] && inside_sale_bounds?)
   end
-  def price
-    currently_on_sale? ? sale_price : normal_price
-  end
-  
+    
   def in_usd?
     !!self[:is_in_usd]
   end
@@ -59,7 +63,7 @@ Spree::Variant.class_eval do
   private
   
   def convert_price(price)
-    in_usd? ? (price * Spree::Config.conversion_rate) : price
+    price && in_usd? ? (price * Spree::Config.conversion_rate) : price
   end
   
 end
