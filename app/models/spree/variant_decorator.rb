@@ -1,10 +1,15 @@
 Spree::Variant.class_eval do
-  attr_accessible :is_in_usd, :unconverted_price, :certificate_number, :sale_price, :sale_starts, :sale_ends
+  attr_accessible :is_in_usd, :unconverted_price, :certificate_number, :sale_price, :sale_starts, :sale_ends, :diamond_certificate
   
   has_one :diamond_certification
 
   has_many :variant_properties, :dependent => :destroy
   has_many :properties, :through => :variant_properties
+  
+  def diamond_certificate=(file)
+    build_diamond_certification.save! if !diamond_certification
+    diamond_certification.images.create!({ :attachment => file }, :without_protection => true)
+  end
   
   def price
     currently_on_sale? ? sale_price : normal_price
@@ -23,9 +28,15 @@ Spree::Variant.class_eval do
   def currently_on_sale?
     (product && product.currently_on_sale?) || (self[:sale_price] && inside_sale_bounds?)
   end
-    
-  def in_usd?
+  
+  def is_in_usd
+    in_usd?
+  end
+  def is_explicitly_usd?
     !!self[:is_in_usd]
+  end
+  def in_usd?
+    !!self[:is_in_usd] || (!is_master && product.master.in_usd?)
   end
   
   def unconverted_price=(unconverted)

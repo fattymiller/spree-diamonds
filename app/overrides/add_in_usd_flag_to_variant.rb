@@ -60,10 +60,14 @@ Deface::Override.new(:virtual_path => "spree/admin/variants/_form",
                      :name => "add_in_usd_to_variant_maintenance",
                      :insert_after => "code[erb-loud]:contains('f.text_field :unconverted_price')",
                      :disabled => false,
-                     :text => "
+                     :text => "     
      <%= f.field_container :is_in_usd do %>
        <%= f.check_box :is_in_usd, :style => 'margin-left: 20px;', :'data-rate' => Spree::Config.conversion_rate %>
        <%= f.label :is_in_usd, 'Price is in USD?' %>
+
+       <% if !f.object.is_explicitly_usd? && f.object.in_usd? %>
+         <p style=\"color: red; margin-left: 20px;\">This variant is in USD since it's parent product is in USD.</p>
+       <% end %>
        
        <p id=\"aud_display\" style=\"margin-left: 20px;\">
         <strong>AUD </strong> <span><%= number_to_currency @variant.price %></span> (1 <strong>US dollar</strong> = <%= Spree::Config.conversion_rate %> <strong><%= Spree::Config.conversion_rate == 1 ? \"Australian dollar\" : \"Australian dollars\" %></strong>)
