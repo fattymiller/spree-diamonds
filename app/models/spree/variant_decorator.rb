@@ -36,7 +36,12 @@ Spree::Variant.class_eval do
     !!self[:is_in_usd]
   end
   def in_usd?
-    !!self[:is_in_usd] || (!is_master && product.master.in_usd?)
+    return true if is_explicitly_usd?
+    
+    return false if is_master || !product || !product.persisted? || product.new_record?
+    return false if product.variants_including_master.size == 0
+    
+    return product.master.is_explicitly_usd?
   end
   
   def unconverted_price=(unconverted)
