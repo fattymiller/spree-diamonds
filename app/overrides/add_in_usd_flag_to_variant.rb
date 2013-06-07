@@ -14,7 +14,7 @@ Deface::Override.new(:virtual_path => "spree/admin/products/_form",
        <%= f.label :is_in_usd, 'Price is in USD?' %>
        
        <p id=\"aud_display\" style=\"margin-left: 20px;\">
-        <strong>AUD </strong> <span><%= number_to_currency @product.master.price %></span> (1 <strong>US dollar</strong> = <%= Spree::Config.conversion_rate %> <strong><%= Spree::Config.conversion_rate == 1 ? \"Australian dollar\" : \"Australian dollars\" %></strong>)
+        <strong>AUD </strong> <span><%= number_to_currency @product.master.price %></span> (1 <strong>US dollar</strong> = <%= Spree::Config.conversion_rate %> <strong><%= Spree::Config.conversion_rate == 1 ? \"Australian dollar\" : \"Australian dollars\" %></strong>) (<a href=\"<%= edit_admin_general_settings_path(:anchor => \"conversaion_rate\") %>\" target=\"_blank\">change</a>)
        </p>
      <% end %>
      
@@ -23,7 +23,7 @@ Deface::Override.new(:virtual_path => "spree/admin/products/_form",
          var unconverted = parseFloat($(\"#product_unconverted_price\").val().replace(/,/, ''), 10);
          var rate = parseFloat($(\"#product_is_in_usd\").attr(\"data-rate\"), 10);
          
-         $(\"#aud_display span\").html((unconverted * rate).toFixed(2));
+         $(\"#aud_display span\").html((unconverted / rate).toFixed(2));
        };
      
       update_checkbox_visibility = function(source) {
@@ -70,7 +70,7 @@ Deface::Override.new(:virtual_path => "spree/admin/variants/_form",
        <% end %>
        
        <p id=\"aud_display\" style=\"margin-left: 20px;\">
-        <strong>AUD </strong> <span><%= number_to_currency @variant.price %></span> (1 <strong>US dollar</strong> = <%= Spree::Config.conversion_rate %> <strong><%= Spree::Config.conversion_rate == 1 ? \"Australian dollar\" : \"Australian dollars\" %></strong>)
+        <strong>AUD </strong> <span><%= number_to_currency @variant.price %></span> (1 <strong>US dollar</strong> = <%= Spree::Config.conversion_rate %> <strong><%= Spree::Config.conversion_rate == 1 ? \"Australian dollar\" : \"Australian dollars\" %></strong>) (<a href=\"<%= edit_admin_general_settings_path(:anchor => \"conversaion_rate\") %>\" target=\"_blank\">change</a>)
        </p>
      <% end %>
      
@@ -79,7 +79,7 @@ Deface::Override.new(:virtual_path => "spree/admin/variants/_form",
          var unconverted = parseFloat($(\"#variant_unconverted_price\").val().replace(/,/, ''), 10);
          var rate = parseFloat($(\"#variant_is_in_usd\").attr(\"data-rate\"), 10);
          
-         $(\"#aud_display span\").html((unconverted * rate).toFixed(2));
+         $(\"#aud_display span\").html((unconverted / rate).toFixed(2));
        };
      
       update_checkbox_visibility = function(source) {

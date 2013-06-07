@@ -79,7 +79,7 @@ Spree::Variant.class_eval do
   private
   
   def convert_price(price)
-    price && in_usd? ? (price * Spree::Config.conversion_rate) : price
+    price && in_usd? ? (price / Spree::Config.conversion_rate) : price
   end
   
 end
