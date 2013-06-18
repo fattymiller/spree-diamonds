@@ -41,7 +41,7 @@ Spree::Variant.class_eval do
     return false if is_master || !product || !product.persisted? || product.new_record?
     return false if product.variants_including_master.size == 0
     
-    return product.master.is_explicitly_usd?
+    return product.master && product.master.is_explicitly_usd?
   end
   
   def unconverted_price=(unconverted)
