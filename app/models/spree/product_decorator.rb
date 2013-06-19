@@ -3,7 +3,7 @@ Spree::Product.class_eval do
   delegate_belongs_to :master, :is_in_usd, :unconverted_price
   
   def is_diamond?
-    taxons.any? { |taxon| taxon.ancestors.collect(&:name).include?("Diamonds") }
+    taxons.any? { |taxon| taxon.name.include?("Diamonds") || taxon.ancestors.collect(&:name).include?("Diamonds") }
   end
   
   def stock_count
