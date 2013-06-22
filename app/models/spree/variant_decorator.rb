@@ -18,11 +18,12 @@ Spree::Variant.class_eval do
     convert_price unconverted_price
   end  
   def sale_price
-    convert_price(self[:sale_price] || product.sale_price)
+    convert_price(self[:sale_price] || product.sale_price).ceil
   end
   
   def inside_sale_bounds?
-    (!sale_starts || Time.now > sale_starts) && (!sale_ends || Time.now < sale_ends)
+    time_now = Time.now
+    (!sale_starts || time_now > sale_starts) && (!sale_ends || time_now < sale_ends)
   end
   
   def currently_on_sale?
@@ -48,7 +49,13 @@ Spree::Variant.class_eval do
     self.price = unconverted
   end
   def unconverted_price
-    self[:price]
+    set_price = self[:price]
+    set_price.to_i > 0 ? set_price : (per_carat_price * carat_weight)
+  end
+  
+  def carat_weight
+    stone_carat = option_value("stone-carat")
+    stone_carat.to_f # 0.0 for nil
   end
   
   def set_property(property_name, property_value)
