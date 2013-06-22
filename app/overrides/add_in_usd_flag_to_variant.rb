@@ -23,7 +23,7 @@ Deface::Override.new(:virtual_path => "spree/admin/products/_form",
          var unconverted = parseFloat($(\"#product_unconverted_price\").val().replace(/,/, ''), 10);
          var rate = parseFloat($(\"#product_is_in_usd\").attr(\"data-rate\"), 10);
          
-         $(\"#aud_display span\").html((unconverted / rate).toFixed(2));
+         $(\"#aud_display span\").html(Math.ceil(unconverted / rate).toFixed(2));
        };
      
       update_checkbox_visibility = function(source) {
@@ -79,7 +79,7 @@ Deface::Override.new(:virtual_path => "spree/admin/variants/_form",
          var unconverted = parseFloat($(\"#variant_unconverted_price\").val().replace(/,/, ''), 10);
          var rate = parseFloat($(\"#variant_is_in_usd\").attr(\"data-rate\"), 10);
          
-         $(\"#aud_display span\").html((unconverted / rate).toFixed(2));
+         $(\"#aud_display span\").html(Math.ceil(unconverted / rate).toFixed(2));
        };
      
       update_checkbox_visibility = function(source) {
