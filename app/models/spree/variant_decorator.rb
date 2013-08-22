@@ -18,7 +18,10 @@ Spree::Variant.class_eval do
     convert_price unconverted_price
   end  
   def sale_price
-    convert_price(self[:sale_price] || product.sale_price).ceil
+    sale_price = self[:sale_price] || product.sale_price
+    sale_price = sale_price * carat_weight if product.is_diamond?
+    
+    convert_price(sale_price).ceil
   end
   
   def inside_sale_bounds?
