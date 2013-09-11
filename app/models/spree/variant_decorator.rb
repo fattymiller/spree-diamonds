@@ -15,7 +15,7 @@ Spree::Variant.class_eval do
     currently_on_sale? ? sale_price : normal_price
   end
   def normal_price
-    convert_price unconverted_price
+    convert_price(unconverted_price).ceil
   end  
   def sale_price
     sale_price = self[:sale_price] || product.sale_price
