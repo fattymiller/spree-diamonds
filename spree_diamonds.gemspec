@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_diamonds'
-  s.version     = '1.0.0'
+  s.version     = '1.0.1'
   s.summary     = 'diamonds-for-you spree extension'
   s.description = 'Spreecommerce extension to get this working for diamonds-for-you'
   s.required_ruby_version = '>= 1.9.2'
